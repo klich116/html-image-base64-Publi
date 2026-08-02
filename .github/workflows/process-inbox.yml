@@ -66,6 +66,13 @@ jobs:
           if git diff --cached --quiet; then
             echo "No hay imágenes nuevas que procesar, no creo commit."
           else
-            git commit -m "bot: proceso automático de inbox/, actualizo docs/ [skip ci]"
+            # Ojo con esto: NO le pongo [skip ci] al mensaje. Lo tenía
+            # antes pensando en evitar un loop infinito, pero como el
+            # workflow solo escucha cambios en inbox/** (no en docs/ ni
+            # inbox_output/), ese loop nunca iba a pasar igual. Y sí
+            # tenía un efecto secundario real: GitHub trata [skip ci]
+            # como una señal global, y eso también le impedía a Pages
+            # reconstruir la página con el docs/ nuevo.
+            git commit -m "bot: proceso automático de inbox/, actualizo docs/"
             git push
           fi
