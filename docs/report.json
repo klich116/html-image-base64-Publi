@@ -1,0 +1,51 @@
+{
+  "generated_at": "2026-08-02T23:14:09.898310+00:00",
+  "success": {
+    "/tmp/build/html-image-base64_new/sample_data/index.html": {
+      "images/icon.svg": {
+        "src": "images/icon.svg",
+        "resolved_path": "/tmp/build/html-image-base64_new/sample_data/images/icon.svg",
+        "mime_type": "image/svg+xml",
+        "size_bytes": 110
+      },
+      "images/banner.jpg": {
+        "src": "images/banner.jpg",
+        "resolved_path": "/tmp/build/html-image-base64_new/sample_data/images/banner.jpg",
+        "mime_type": "image/jpeg",
+        "size_bytes": 160
+      },
+      "images/logo.png": {
+        "src": "images/logo.png",
+        "resolved_path": "/tmp/build/html-image-base64_new/sample_data/images/logo.png",
+        "mime_type": "image/png",
+        "size_bytes": 68
+      }
+    },
+    "/tmp/build/html-image-base64_new/sample_data/subseccion/pagina2.html": {
+      "images/logo.png": {
+        "src": "images/logo.png",
+        "resolved_path": "/tmp/build/html-image-base64_new/sample_data/subseccion/images/logo.png",
+        "mime_type": "image/png",
+        "size_bytes": 68
+      }
+    }
+  },
+  "fail": {
+    "/tmp/build/html-image-base64_new/sample_data/index.html": {
+      "images/no-existe.png": {
+        "src": "images/no-existe.png",
+        "resolved_path": null,
+        "mime_type": null,
+        "size_bytes": null,
+        "error": "Archivo de imagen no encontrado: /tmp/build/html-image-base64_new/sample_data/images/no-existe.png"
+      }
+    },
+    "/tmp/build/html-image-base64_new/sample_data/subseccion/pagina2.html": {}
+  },
+  "summary": {
+    "files_processed": 2,
+    "files_with_errors": 0,
+    "images_success": 4,
+    "images_fail": 1
+  }
+}

@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Expediente de conversión · html-image-base64</title>
+<style>
+
+/* Elegí esta paleta pensando en papel y tinta, no en pantallas: fondo
+   crudo tipo cartulina, tinta casi negra, y dos acentos que se sienten
+   más de sello de archivo que de producto de software: terracota para
+   lo que falló, verde botella para lo que salió bien. Nada de morado,
+   nada de azul eléctrico. */
+:root {
+  --paper: #f2ede3;
+  --paper-raised: #ffffff;
+  --ink: #201c16;
+  --ink-soft: #6b6255;
+  --line: #d8cfbd;
+  --ok: #2f5d43;
+  --ok-bg: #e4ecdf;
+  --bad: #a5401f;
+  --bad-bg: #f3e2d4;
+  --mustard: #c98a2c;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background-color: var(--paper);
+  background-image:
+    radial-gradient(var(--line) 0.6px, transparent 0.6px);
+  background-size: 22px 22px;
+  color: var(--ink);
+  font-family: 'Iowan Old Style', 'Palatino Linotype', Georgia, 'Times New Roman', serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+code, .mono {
+  font-family: 'JetBrains Mono', 'Courier New', ui-monospace, monospace;
+}
+
+main {
+  max-width: 880px;
+  margin: 0 auto;
+  padding: 64px 28px 90px;
+}
+
+.masthead {
+  border-top: 3px solid var(--ink);
+  border-bottom: 1px solid var(--ink);
+  padding: 18px 0 26px;
+  margin-bottom: 40px;
+}
+.masthead-top {
+  display: flex; justify-content: space-between;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11.5px; letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--ink-soft); margin-bottom: 22px;
+}
+.masthead h1 {
+  font-size: clamp(30px, 4.4vw, 46px);
+  line-height: 1.08;
+  margin: 0 0 10px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+.dek {
+  font-size: 16px; color: var(--ink-soft); margin: 0 0 14px; max-width: 46ch;
+  font-style: italic;
+}
+.timestamp {
+  font-family: 'JetBrains Mono', monospace; font-size: 11.5px;
+  color: var(--ink-soft); margin: 0; text-transform: uppercase; letter-spacing: 0.05em;
+}
+
+.ledger {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  border: 1px solid var(--ink);
+  margin-bottom: 46px;
+}
+.ledger-cell {
+  padding: 20px 14px;
+  text-align: center;
+  border-right: 1px solid var(--ink);
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px;
+}
+.ledger-cell:last-child { border-right: none; }
+.ledger-value {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 34px; font-weight: 700;
+}
+.ledger-cell.ok .ledger-value { color: var(--ok); }
+.ledger-cell.bad .ledger-value { color: var(--bad); }
+.ledger-label {
+  font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.07em;
+  color: var(--ink-soft); line-height: 1.3;
+}
+.stamp-cell { background: var(--paper-raised); }
+.stamp {
+  width: 74px; height: 74px; border-radius: 50%;
+  border: 2px solid var(--mustard);
+  outline: 1px dashed var(--mustard);
+  outline-offset: 4px;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  transform: rotate(-6deg);
+}
+.stamp-pct {
+  font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 15px; color: var(--mustard);
+}
+.stamp-caption {
+  font-size: 7.5px; text-transform: uppercase; letter-spacing: 0.05em; color: var(--mustard);
+}
+
+.files { display: flex; flex-direction: column; gap: 22px; }
+.file-card {
+  background: var(--paper-raised);
+  border: 1px solid var(--line);
+  border-left: 4px solid var(--ink);
+  padding: 22px 24px;
+}
+.file-card-header {
+  display: flex; justify-content: space-between; align-items: baseline; gap: 12px; flex-wrap: wrap;
+}
+.file-card-header h2 {
+  font-size: 19px; margin: 0; font-weight: 600;
+}
+.tag {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px; color: var(--ink-soft);
+  border: 1px solid var(--line); padding: 3px 9px; white-space: nowrap;
+}
+.path {
+  font-family: 'JetBrains Mono', monospace;
+  color: var(--ink-soft); font-size: 11.5px; margin: 5px 0 16px; word-break: break-all;
+}
+.file-error {
+  color: var(--bad); font-size: 13px; margin: 0 0 14px;
+  font-style: italic;
+}
+
+.rows { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; }
+.row {
+  display: flex; align-items: center; gap: 12px; font-size: 13px;
+  padding: 9px 4px; border-top: 1px dotted var(--line);
+}
+.row:first-child { border-top: none; }
+.row code { color: var(--ink); word-break: break-all; }
+.row .meta { margin-left: auto; color: var(--ink-soft); font-size: 11px; white-space: nowrap; }
+.mark {
+  flex: none; width: 18px; text-align: center;
+  font-family: 'JetBrains Mono', monospace; font-weight: 700;
+}
+.row.ok .mark { color: var(--ok); }
+.row.bad .mark { color: var(--bad); }
+.row.empty { color: var(--ink-soft); font-style: italic; }
+
+footer { margin-top: 60px; text-align: center; }
+.stitch {
+  display: block; height: 1px; margin: 0 auto 18px;
+  background-image: repeating-linear-gradient(90deg, var(--ink) 0 6px, transparent 6px 12px);
+  max-width: 240px;
+}
+footer p {
+  font-family: 'JetBrains Mono', monospace; font-size: 11px;
+  color: var(--ink-soft); letter-spacing: 0.03em;
+}
+
+@media (max-width: 640px) {
+  .ledger { grid-template-columns: repeat(2, 1fr); }
+  .ledger-cell:nth-child(2) { border-right: none; }
+  .ledger-cell { border-bottom: 1px solid var(--ink); }
+}
+
+</style>
+</head>
+<body>
+<main>
+  <header class="masthead">
+    <div class="masthead-top">
+      <span class="folio">N.º 20260802T23140</span>
+      <span class="folio">html-image-base64</span>
+    </div>
+    <h1>Expediente de conversión de imágenes</h1>
+    <p class="dek">Cada archivo HTML de entrada, sus imágenes y qué pasó con cada una.</p>
+    <p class="timestamp">Registrado el 2026-08-02T23:14:09.898310+00:00</p>
+  </header>
+
+  <section class="ledger">
+    <div class="ledger-cell">
+      <span class="ledger-value">02</span>
+      <span class="ledger-label">archivos<br>procesados</span>
+    </div>
+    <div class="ledger-cell ok">
+      <span class="ledger-value">04</span>
+      <span class="ledger-label">imágenes<br>convertidas</span>
+    </div>
+    <div class="ledger-cell bad">
+      <span class="ledger-value">01</span>
+      <span class="ledger-label">imágenes<br>con error</span>
+    </div>
+    <div class="ledger-cell stamp-cell">
+      <div class="stamp">
+        <span class="stamp-pct">80.0%</span>
+        <span class="stamp-caption">tasa de éxito</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="files">
+    
+    <article class="file-card">
+      <div class="file-card-header">
+        <h2>index.html</h2>
+        <span class="tag">03 ok &middot; 01 error</span>
+      </div>
+      <p class="path">/tmp/build/html-image-base64_new/sample_data/index.html</p>
+      
+      <ul class="rows">
+        <li class="row ok"><span class="mark">✓</span><code>images/icon.svg</code><span class="meta">image/svg+xml · 110 B</span></li>
+<li class="row ok"><span class="mark">✓</span><code>images/banner.jpg</code><span class="meta">image/jpeg · 160 B</span></li>
+<li class="row ok"><span class="mark">✓</span><code>images/logo.png</code><span class="meta">image/png · 68 B</span></li>
+<li class="row bad"><span class="mark">✕</span><code>images/no-existe.png</code><span class="meta">Archivo de imagen no encontrado: /tmp/build/html-image-base64_new/sample_data/images/no-existe.png</span></li>
+      </ul>
+    </article>
+
+    <article class="file-card">
+      <div class="file-card-header">
+        <h2>pagina2.html</h2>
+        <span class="tag">01 ok &middot; 00 error</span>
+      </div>
+      <p class="path">/tmp/build/html-image-base64_new/sample_data/subseccion/pagina2.html</p>
+      
+      <ul class="rows">
+        <li class="row ok"><span class="mark">✓</span><code>images/logo.png</code><span class="meta">image/png · 68 B</span></li>
+      </ul>
+    </article>
+  </section>
+
+  <footer>
+    <span class="stitch"></span>
+    <p>Generado por html_image_base64 &mdash; únicamente librería estándar de Python.</p>
+  </footer>
+</main>
+</body>
+</html>
