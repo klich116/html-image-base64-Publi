@@ -1,51 +1,80 @@
 {
-  "generated_at": "2026-08-02T23:14:09.898310+00:00",
+  "generated_at": "2026-08-02T23:48:08.622054+00:00",
   "success": {
-    "/tmp/build/html-image-base64_new/sample_data/index.html": {
-      "images/icon.svg": {
-        "src": "images/icon.svg",
-        "resolved_path": "/tmp/build/html-image-base64_new/sample_data/images/icon.svg",
-        "mime_type": "image/svg+xml",
-        "size_bytes": 110
-      },
-      "images/banner.jpg": {
-        "src": "images/banner.jpg",
-        "resolved_path": "/tmp/build/html-image-base64_new/sample_data/images/banner.jpg",
+    "/home/runner/work/html-image-base64-Publi/html-image-base64-Publi/inbox/galeria/galeria.html": {
+      "images/foto3.jpg": {
+        "src": "images/foto3.jpg",
+        "resolved_path": "/home/runner/work/html-image-base64-Publi/html-image-base64-Publi/inbox/galeria/images/foto3.jpg",
         "mime_type": "image/jpeg",
-        "size_bytes": 160
+        "size_bytes": 819
       },
-      "images/logo.png": {
-        "src": "images/logo.png",
-        "resolved_path": "/tmp/build/html-image-base64_new/sample_data/images/logo.png",
+      "images/foto2.png": {
+        "src": "images/foto2.png",
+        "resolved_path": "/home/runner/work/html-image-base64-Publi/html-image-base64-Publi/inbox/galeria/images/foto2.png",
         "mime_type": "image/png",
-        "size_bytes": 68
+        "size_bytes": 283
+      },
+      "images/foto1.jpg": {
+        "src": "images/foto1.jpg",
+        "resolved_path": "/home/runner/work/html-image-base64-Publi/html-image-base64-Publi/inbox/galeria/images/foto1.jpg",
+        "mime_type": "image/jpeg",
+        "size_bytes": 821
       }
     },
-    "/tmp/build/html-image-base64_new/sample_data/subseccion/pagina2.html": {
-      "images/logo.png": {
-        "src": "images/logo.png",
-        "resolved_path": "/tmp/build/html-image-base64_new/sample_data/subseccion/images/logo.png",
+    "/home/runner/work/html-image-base64-Publi/html-image-base64-Publi/inbox/perfil/perfil.html": {
+      "images/avatar.png": {
+        "src": "images/avatar.png",
+        "resolved_path": "/home/runner/work/html-image-base64-Publi/html-image-base64-Publi/inbox/perfil/images/avatar.png",
         "mime_type": "image/png",
-        "size_bytes": 68
+        "size_bytes": 283
+      }
+    },
+    "/home/runner/work/html-image-base64-Publi/html-image-base64-Publi/inbox/receta/receta.html": {
+      "images/paso-final.png": {
+        "src": "images/paso-final.png",
+        "resolved_path": "/home/runner/work/html-image-base64-Publi/html-image-base64-Publi/inbox/receta/images/paso-final.png",
+        "mime_type": "image/png",
+        "size_bytes": 282
+      },
+      "images/ingredientes.jpg": {
+        "src": "images/ingredientes.jpg",
+        "resolved_path": "/home/runner/work/html-image-base64-Publi/html-image-base64-Publi/inbox/receta/images/ingredientes.jpg",
+        "mime_type": "image/jpeg",
+        "size_bytes": 820
+      },
+      "images/plato.png": {
+        "src": "images/plato.png",
+        "resolved_path": "/home/runner/work/html-image-base64-Publi/html-image-base64-Publi/inbox/receta/images/plato.png",
+        "mime_type": "image/png",
+        "size_bytes": 282
       }
     }
   },
   "fail": {
-    "/tmp/build/html-image-base64_new/sample_data/index.html": {
-      "images/no-existe.png": {
-        "src": "images/no-existe.png",
+    "/home/runner/work/html-image-base64-Publi/html-image-base64-Publi/inbox/galeria/galeria.html": {
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Base64_Table.png/320px-Base64_Table.png": {
+        "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Base64_Table.png/320px-Base64_Table.png",
         "resolved_path": null,
         "mime_type": null,
         "size_bytes": null,
-        "error": "Archivo de imagen no encontrado: /tmp/build/html-image-base64_new/sample_data/images/no-existe.png"
+        "error": "No se pudo descargar 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Base64_Table.png/320px-Base64_Table.png': HTTP Error 403: Forbidden"
       }
     },
-    "/tmp/build/html-image-base64_new/sample_data/subseccion/pagina2.html": {}
+    "/home/runner/work/html-image-base64-Publi/html-image-base64-Publi/inbox/perfil/perfil.html": {
+      "images/avatar-que-no-existe.png": {
+        "src": "images/avatar-que-no-existe.png",
+        "resolved_path": null,
+        "mime_type": null,
+        "size_bytes": null,
+        "error": "Archivo de imagen no encontrado: /home/runner/work/html-image-base64-Publi/html-image-base64-Publi/inbox/perfil/images/avatar-que-no-existe.png"
+      }
+    },
+    "/home/runner/work/html-image-base64-Publi/html-image-base64-Publi/inbox/receta/receta.html": {}
   },
   "summary": {
-    "files_processed": 2,
+    "files_processed": 3,
     "files_with_errors": 0,
-    "images_success": 4,
-    "images_fail": 1
+    "images_success": 7,
+    "images_fail": 2
   }
 }
