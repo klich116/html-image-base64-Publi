@@ -143,19 +143,39 @@ main {
 
 .rows { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; }
 .row {
-  display: flex; align-items: center; gap: 12px; font-size: 13px;
+  display: flex; align-items: flex-start; gap: 10px; font-size: 13px;
   padding: 9px 4px; border-top: 1px dotted var(--line);
 }
 .row:first-child { border-top: none; }
-.row code { color: var(--ink); word-break: break-all; }
-.row .meta { margin-left: auto; color: var(--ink-soft); font-size: 11px; white-space: nowrap; }
 .mark {
-  flex: none; width: 18px; text-align: center;
+  flex: none; width: 18px; text-align: center; margin-top: 1px;
   font-family: 'JetBrains Mono', monospace; font-weight: 700;
 }
 .row.ok .mark { color: var(--ok); }
 .row.bad .mark { color: var(--bad); }
 .row.empty { color: var(--ink-soft); font-style: italic; }
+
+/* row-body es la clave: cada fila puede tener un src corto o una URL
+   larguísima, así que dejo que el src y el estado se acomoden en su
+   propia línea cuando no caben juntos, en vez de forzarlos a
+   compartir una sola línea y que el navegador rompa la URL letra por
+   letra para que quepa. */
+.row-body {
+  display: flex; flex-wrap: wrap; align-items: baseline;
+  column-gap: 14px; row-gap: 2px; min-width: 0; flex: 1;
+}
+.row-src {
+  color: var(--ink);
+  overflow-wrap: anywhere;
+  min-width: 0;
+  flex: 1 1 220px;
+}
+.row-status {
+  color: var(--ink-soft); font-size: 11px;
+  overflow-wrap: anywhere;
+  flex: 0 1 auto;
+}
+.row.bad .row-status { color: var(--bad); }
 
 footer { margin-top: 60px; text-align: center; }
 .stitch {
@@ -180,12 +200,12 @@ footer p {
 <main>
   <header class="masthead">
     <div class="masthead-top">
-      <span class="folio">N.º 20260802T23542</span>
+      <span class="folio">N.º 20260802T18591</span>
       <span class="folio">html-image-base64</span>
     </div>
     <h1>Expediente de conversión de imágenes</h1>
     <p class="dek">Cada archivo HTML de entrada, sus imágenes y qué pasó con cada una.</p>
-    <p class="timestamp">Registrado el 2026-08-02T23:54:28.599744+00:00</p>
+    <p class="timestamp">Registrado el 2026-08-02T18:59:17.100171-05:00 (hora Colombia, UTC-5)</p>
   </header>
 
   <section class="ledger">
@@ -216,13 +236,13 @@ footer p {
         <h2>galeria.html</h2>
         <span class="tag">03 ok &middot; 01 error</span>
       </div>
-      <p class="path">/home/runner/work/html-image-base64-Publi/html-image-base64-Publi/inbox/galeria/galeria.html</p>
+      <p class="path">/tmp/build/repo/repo/inbox/galeria/galeria.html</p>
       
       <ul class="rows">
-        <li class="row ok"><span class="mark">✓</span><code>images/foto3.jpg</code><span class="meta">image/jpeg · 819 B</span></li>
-<li class="row ok"><span class="mark">✓</span><code>images/foto2.png</code><span class="meta">image/png · 283 B</span></li>
-<li class="row ok"><span class="mark">✓</span><code>images/foto1.jpg</code><span class="meta">image/jpeg · 821 B</span></li>
-<li class="row bad"><span class="mark">✕</span><code>https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Base64_Table.png/320px-Base64_Table.png</code><span class="meta">No se pudo descargar &#x27;https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Base64_Table.png/320px-Base64_Table.png&#x27;: HTTP Error 403: Forbidden</span></li>
+        <li class="row ok"><span class="mark">✓</span><div class="row-body"><code class="row-src">images/foto3.jpg</code><span class="row-status">image/jpeg · 819 B</span></div></li>
+<li class="row ok"><span class="mark">✓</span><div class="row-body"><code class="row-src">images/foto2.png</code><span class="row-status">image/png · 283 B</span></div></li>
+<li class="row ok"><span class="mark">✓</span><div class="row-body"><code class="row-src">images/foto1.jpg</code><span class="row-status">image/jpeg · 821 B</span></div></li>
+<li class="row bad"><span class="mark">✕</span><div class="row-body"><code class="row-src">https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Base64_Table.png/320px-Base64_Table.png</code><span class="row-status">No se pudo descargar &#x27;https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Base64_Table.png/320px-Base64_Table.png&#x27;: &lt;urlopen error Tunnel connection failed: 403 Forbidden&gt;</span></div></li>
       </ul>
     </article>
 
@@ -231,11 +251,11 @@ footer p {
         <h2>perfil.html</h2>
         <span class="tag">01 ok &middot; 01 error</span>
       </div>
-      <p class="path">/home/runner/work/html-image-base64-Publi/html-image-base64-Publi/inbox/perfil/perfil.html</p>
+      <p class="path">/tmp/build/repo/repo/inbox/perfil/perfil.html</p>
       
       <ul class="rows">
-        <li class="row ok"><span class="mark">✓</span><code>images/avatar.png</code><span class="meta">image/png · 283 B</span></li>
-<li class="row bad"><span class="mark">✕</span><code>images/avatar-que-no-existe.png</code><span class="meta">Archivo de imagen no encontrado: /home/runner/work/html-image-base64-Publi/html-image-base64-Publi/inbox/perfil/images/avatar-que-no-existe.png</span></li>
+        <li class="row ok"><span class="mark">✓</span><div class="row-body"><code class="row-src">images/avatar.png</code><span class="row-status">image/png · 283 B</span></div></li>
+<li class="row bad"><span class="mark">✕</span><div class="row-body"><code class="row-src">images/avatar-que-no-existe.png</code><span class="row-status">Archivo de imagen no encontrado: /tmp/build/repo/repo/inbox/perfil/images/avatar-que-no-existe.png</span></div></li>
       </ul>
     </article>
 
@@ -244,12 +264,12 @@ footer p {
         <h2>receta.html</h2>
         <span class="tag">03 ok &middot; 00 error</span>
       </div>
-      <p class="path">/home/runner/work/html-image-base64-Publi/html-image-base64-Publi/inbox/receta/receta.html</p>
+      <p class="path">/tmp/build/repo/repo/inbox/receta/receta.html</p>
       
       <ul class="rows">
-        <li class="row ok"><span class="mark">✓</span><code>images/paso-final.png</code><span class="meta">image/png · 282 B</span></li>
-<li class="row ok"><span class="mark">✓</span><code>images/ingredientes.jpg</code><span class="meta">image/jpeg · 820 B</span></li>
-<li class="row ok"><span class="mark">✓</span><code>images/plato.png</code><span class="meta">image/png · 282 B</span></li>
+        <li class="row ok"><span class="mark">✓</span><div class="row-body"><code class="row-src">images/paso-final.png</code><span class="row-status">image/png · 282 B</span></div></li>
+<li class="row ok"><span class="mark">✓</span><div class="row-body"><code class="row-src">images/ingredientes.jpg</code><span class="row-status">image/jpeg · 820 B</span></div></li>
+<li class="row ok"><span class="mark">✓</span><div class="row-body"><code class="row-src">images/plato.png</code><span class="row-status">image/png · 282 B</span></div></li>
       </ul>
     </article>
   </section>

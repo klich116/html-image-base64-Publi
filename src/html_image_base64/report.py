@@ -73,7 +73,7 @@ class HtmlDashboardReportWriter:
     </div>
     <h1>Expediente de conversión de imágenes</h1>
     <p class="dek">Cada archivo HTML de entrada, sus imágenes y qué pasó con cada una.</p>
-    <p class="timestamp">Registrado el {escape(run.generated_at)}</p>
+    <p class="timestamp">Registrado el {escape(run.generated_at)} (hora Colombia, UTC-5)</p>
   </header>
 
   <section class="ledger">
@@ -112,19 +112,32 @@ class HtmlDashboardReportWriter:
     def _render_file_card(self, file_report) -> str:
         # Una ficha por archivo HTML procesado, con una fila por imagen:
         # marca de "ok" si se convirtió, marca de "x" con el motivo si falló.
+        # El src puede ser una ruta corta o una URL kilométrica (como una
+        # de Wikipedia con todo y su thumbnail). Si meto el src y el
+        # texto de estado en la misma línea sin darles su propio
+        # espacio, cuando no caben uno al lado del otro terminan
+        # aplastándose y el navegador rompe la URL letra por letra para
+        # que quepa. Por eso separo cada fila en dos renglones propios
+        # (row-src / row-status) en vez de una sola línea rígida.
         rows = []
         for src, outcome in file_report.success.items():
             rows.append(
-                f'<li class="row ok"><span class="mark">✓</span>'
-                f'<code>{escape(src)}</code>'
-                f'<span class="meta">{escape(outcome.mime_type or "")} · '
-                f'{_human_size(outcome.size_bytes)}</span></li>'
+                f'<li class="row ok">'
+                f'<span class="mark">✓</span>'
+                f'<div class="row-body">'
+                f'<code class="row-src">{escape(src)}</code>'
+                f'<span class="row-status">{escape(outcome.mime_type or "")} · '
+                f'{_human_size(outcome.size_bytes)}</span>'
+                f'</div></li>'
             )
         for src, outcome in file_report.fail.items():
             rows.append(
-                f'<li class="row bad"><span class="mark">✕</span>'
-                f'<code>{escape(src)}</code>'
-                f'<span class="meta">{escape(outcome.error or "error desconocido")}</span></li>'
+                f'<li class="row bad">'
+                f'<span class="mark">✕</span>'
+                f'<div class="row-body">'
+                f'<code class="row-src">{escape(src)}</code>'
+                f'<span class="row-status">{escape(outcome.error or "error desconocido")}</span>'
+                f'</div></li>'
             )
 
         rows_html = "\n".join(rows) or '<li class="row empty">Sin imágenes detectadas.</li>'
@@ -296,19 +309,39 @@ main {
 
 .rows { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; }
 .row {
-  display: flex; align-items: center; gap: 12px; font-size: 13px;
+  display: flex; align-items: flex-start; gap: 10px; font-size: 13px;
   padding: 9px 4px; border-top: 1px dotted var(--line);
 }
 .row:first-child { border-top: none; }
-.row code { color: var(--ink); word-break: break-all; }
-.row .meta { margin-left: auto; color: var(--ink-soft); font-size: 11px; white-space: nowrap; }
 .mark {
-  flex: none; width: 18px; text-align: center;
+  flex: none; width: 18px; text-align: center; margin-top: 1px;
   font-family: 'JetBrains Mono', monospace; font-weight: 700;
 }
 .row.ok .mark { color: var(--ok); }
 .row.bad .mark { color: var(--bad); }
 .row.empty { color: var(--ink-soft); font-style: italic; }
+
+/* row-body es la clave: cada fila puede tener un src corto o una URL
+   larguísima, así que dejo que el src y el estado se acomoden en su
+   propia línea cuando no caben juntos, en vez de forzarlos a
+   compartir una sola línea y que el navegador rompa la URL letra por
+   letra para que quepa. */
+.row-body {
+  display: flex; flex-wrap: wrap; align-items: baseline;
+  column-gap: 14px; row-gap: 2px; min-width: 0; flex: 1;
+}
+.row-src {
+  color: var(--ink);
+  overflow-wrap: anywhere;
+  min-width: 0;
+  flex: 1 1 220px;
+}
+.row-status {
+  color: var(--ink-soft); font-size: 11px;
+  overflow-wrap: anywhere;
+  flex: 0 1 auto;
+}
+.row.bad .row-status { color: var(--bad); }
 
 footer { margin-top: 60px; text-align: center; }
 .stitch {

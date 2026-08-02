@@ -7,8 +7,16 @@ HTML. Son clases "tontas" a propósito, solo cargan información.
 from __future__ import annotations
 
 from dataclasses import dataclass, field
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from typing import Dict, List, Optional
+
+# El servidor donde corre esto (mi máquina, un runner de GitHub
+# Actions, lo que sea) puede estar en cualquier zona horaria. Como
+# quien va a leer el reporte está en Colombia, prefiero sellar la
+# fecha ya convertida a UTC-5 en vez de dejarla en UTC crudo y
+# obligar a restar cinco horas mentalmente cada vez. Colombia no tiene
+# horario de verano, así que el offset es siempre fijo.
+COLOMBIA_TZ = timezone(timedelta(hours=-5), name="America/Bogota")
 
 
 @dataclass(frozen=True)
@@ -69,7 +77,7 @@ class RunReport:
     """La foto completa de una corrida: puede ser uno o cien archivos HTML."""
 
     generated_at: str = field(
-        default_factory=lambda: datetime.now(timezone.utc).isoformat()
+        default_factory=lambda: datetime.now(COLOMBIA_TZ).isoformat()
     )
     files: List[FileReport] = field(default_factory=list)
 
