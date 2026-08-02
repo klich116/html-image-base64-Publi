@@ -89,7 +89,7 @@ html-image-base64/
 ├── src/html_image_base64/   # librería (paquete instalable)
 ├── tests/                   # 25 pruebas unitarias (unittest)
 ├── sample_data/              # HTML + imágenes reales de ejemplo (incluye subdirectorio y un src roto)
-├── docs/                     # salida de una corrida real, publicada vía GitHub Pages
+├── docs/                     # última corrida procesada, publicada vía GitHub Pages
 ├── demo_output/               # (generado) salida de la demo — ignorado por git
 ├── pyproject.toml / setup.cfg
 ├── Makefile
@@ -106,7 +106,7 @@ en el propio repositorio. Los detalles de cómo organizarlo están en
 
 ## Ver los resultados sin instalar nada
 
-La carpeta `docs/` no es documentación: es la salida real de correr el sistema sobre `sample_data/`. Ahí está `index.html` (el dashboard), `report.json` y los HTML ya convertidos. Para verlos publicados como página web, hay que activar GitHub Pages una vez: Settings → Pages → Branch: `main`, carpeta `/docs` → Save. Tarda un par de minutos en quedar disponible.
+La carpeta `docs/` no es documentación: es la salida de la corrida más reciente. Cada vez que el workflow de `inbox/` procesa algo, pisa `docs/` con ese mismo resultado, así que la página pública siempre muestra lo último que se probó, nunca una foto vieja. Ahí está `index.html` (el dashboard), `report.json` y los HTML ya convertidos. Para publicarla como página web hay que activar GitHub Pages una vez: Settings → Pages → Branch: `main`, carpeta `/docs` → Save. Tarda un par de minutos en quedar disponible después de cada actualización.
 
 ## Cómo subirlo a tu propio GitHub
 
