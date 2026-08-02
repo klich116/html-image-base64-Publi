@@ -96,6 +96,14 @@ html-image-base64/
 └── README.md
 ```
 
+## Probar tus propios HTML sin instalar nada
+
+Hay una carpeta `inbox/` pensada justo para esto: le subes tu HTML (y
+sus imágenes) directo desde la web de GitHub o con un `git push`, y un
+GitHub Action lo procesa solo. El resultado queda en `inbox_output/`,
+en el propio repositorio. Los detalles de cómo organizarlo están en
+`inbox/README.md`.
+
 ## Ver los resultados sin instalar nada
 
 La carpeta `docs/` no es documentación: es la salida real de correr el sistema sobre `sample_data/`. Ahí está `index.html` (el dashboard), `report.json` y los HTML ya convertidos. Para verlos publicados como página web, hay que activar GitHub Pages una vez: Settings → Pages → Branch: `main`, carpeta `/docs` → Save. Tarda un par de minutos en quedar disponible.
