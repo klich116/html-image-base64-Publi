@@ -34,11 +34,16 @@ jobs:
           rm -rf inbox_output
           mkdir -p inbox_output
           touch inbox_output/.gitkeep
+          # El CLI devuelve código 1 si alguna imagen falló, lo cual
+          # tiene sentido para un pipeline estricto, pero acá en inbox/
+          # un fallo parcial es justo lo que quiero poder ver en el
+          # reporte, no algo que deba tumbar el job entero. Por eso
+          # dejo pasar ese código con "|| true".
           PYTHONPATH=src python -m html_image_base64 inbox \
             --out inbox_output \
             --report inbox_output/report.json \
             --dashboard inbox_output/dashboard.html \
-            -v
+            -v || true
 
       - name: Publicar el resultado de vuelta al repo
         run: |
