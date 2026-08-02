@@ -28,6 +28,12 @@ jobs:
 
       - name: Correr el conversor sobre inbox/
         run: |
+          # Empiezo borrando la salida anterior: si alguien quita un
+          # HTML de inbox/, no quiero que su resultado viejo se quede
+          # como basura huérfana en inbox_output/.
+          rm -rf inbox_output
+          mkdir -p inbox_output
+          touch inbox_output/.gitkeep
           PYTHONPATH=src python -m html_image_base64 inbox \
             --out inbox_output \
             --report inbox_output/report.json \
