@@ -1,9 +1,6 @@
 # html-image-base64
 
-[![tests](https://github.com/klich116/html-image-base64-Publi/actions/workflows/tests.yml/badge.svg)](https://github.com/klich116/html-image-base64-Publi/actions/workflows/tests.yml)
-
-Ver el dashboard de resultados en vivo (GitHub Pages): **https://klich116.github.io/html-image-base64-Publi/**
-*(si el link todavía no carga, es porque Pages tarda un par de minutos en activarse la primera vez — ver instrucciones abajo)*
+Ver el dashboard de resultados en vivo (GitHub Pages, una vez activado en Settings → Pages): **https://klich116.github.io/html-image-base64-Publi/**
 
 Convierte las imágenes referenciadas dentro de archivos HTML (`<img src="...">`) a **Base64** embebido (data URI), generando un **archivo nuevo** por cada HTML procesado y dejando siempre el original intacto.
 
@@ -93,7 +90,6 @@ html-image-base64/
 ├── tests/                   # 25 pruebas unitarias (unittest)
 ├── sample_data/              # HTML + imágenes reales de ejemplo (incluye subdirectorio y un src roto)
 ├── docs/                     # salida de una corrida real, publicada vía GitHub Pages
-├── .github/workflows/        # CI: corre los tests en cada push (badge arriba)
 ├── demo_output/               # (generado) salida de la demo — ignorado por git
 ├── pyproject.toml / setup.cfg
 ├── Makefile
@@ -102,9 +98,7 @@ html-image-base64/
 
 ## Ver los resultados sin instalar nada
 
-La carpeta `docs/` no es documentación: es la salida real de correr el sistema sobre `sample_data/`. Ahí está `index.html` (el dashboard), `report.json` y los HTML ya convertidos, publicados en GitHub Pages en cuanto se activa esa opción en el repo (Settings → Pages → Branch: `main`, carpeta `/docs`).
-
-También hay un workflow de GitHub Actions (`.github/workflows/tests.yml`) que corre las 25 pruebas en Python 3.9 a 3.12 cada vez que se sube un cambio — se puede ver el resultado en la pestaña **Actions** del repositorio.
+La carpeta `docs/` no es documentación: es la salida real de correr el sistema sobre `sample_data/`. Ahí está `index.html` (el dashboard), `report.json` y los HTML ya convertidos. Para verlos publicados como página web, hay que activar GitHub Pages una vez: Settings → Pages → Branch: `main`, carpeta `/docs` → Save. Tarda un par de minutos en quedar disponible.
 
 ## Cómo subirlo a tu propio GitHub
 
