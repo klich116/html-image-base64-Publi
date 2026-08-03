@@ -96,17 +96,20 @@ html-image-base64/
 └── README.md
 ```
 
-## Probar tus propios HTML sin instalar nada
+## Cómo cargar tus propios HTML al sistema (sin instalar nada)
 
-Hay una carpeta `inbox/` pensada justo para esto: le subes tu HTML (y
-sus imágenes) directo desde la web de GitHub o con un `git push`, y un
-GitHub Action lo procesa solo. El resultado queda en `inbox_output/`,
-en el propio repositorio. Los detalles de cómo organizarlo están en
-`inbox/README.md`.
+Todo esto pasa dentro del repositorio de GitHub, con un Action que hace el trabajo por ti:
 
-## Ver los resultados sin instalar nada
+1. **Subes tu HTML (y sus imágenes) a la carpeta `inbox/`.** Creas una subcarpeta con el nombre que quieras (por ejemplo `inbox/mi-prueba/`) y metes ahí tu(s) `.html` junto con las imágenes que referencian, respetando las rutas relativas del `src`. Se puede hacer con `git push` o directo desde la web: botón **Add file → Upload files** dentro de `inbox/`, arrastrando la carpeta completa (GitHub conserva la estructura de subcarpetas).
+2. **El GitHub Action se dispara solo** en cuanto detecta el cambio dentro de `inbox/`. Se ve corriendo en vivo en la pestaña **Actions** del repo, workflow "procesar inbox".
+3. **Espera a que termine** (unos segundos). Va a aparecer un commit automático de `html-image-base64-bot` con el resultado.
 
-La carpeta `docs/` no es documentación: es la salida de la corrida más reciente. Cada vez que el workflow de `inbox/` procesa algo, pisa `docs/` con ese mismo resultado, así que la página pública siempre muestra lo último que se probó, nunca una foto vieja. Ahí está `index.html` (el dashboard), `report.json` y los HTML ya convertidos. Para publicarla como página web hay que activar GitHub Pages una vez: Settings → Pages → Branch: `main`, carpeta `/docs` → Save. Tarda un par de minutos en quedar disponible después de cada actualización.
+### Dónde quedan los archivos convertidos
+
+- **`inbox_output/`** — la salida completa de esa corrida: los HTML nuevos ya con las imágenes en Base64, el `report.json` con el objeto `{success, fail}`, y el `dashboard.html` visual. Queda en el propio repositorio, organizado igual que lo que subiste.
+- **`docs/`** — es una copia de ese mismo resultado, pero publicada como página web (GitHub Pages). Cada corrida nueva pisa lo que había antes, así que **https://klich116.github.io/html-image-base64-Publi/** siempre muestra la última prueba, nunca una vieja. La primera vez hay que activarla en Settings → Pages → Branch: `main`, carpeta `/docs` → Save; después queda sola.
+
+Si en cambio corres el CLI en tu propia máquina (ver "Uso como CLI" más abajo), el resultado queda donde tú le digas con `--out`, no en `inbox_output/` ni `docs/` — esas dos carpetas son exclusivas del flujo automático de GitHub. Los detalles de cómo organizar `inbox/` también están en `inbox/README.md`.
 
 ## Cómo subirlo a tu propio GitHub
 
